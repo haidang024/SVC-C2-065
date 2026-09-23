@@ -1,0 +1,33 @@
+# Agent Manifest — AgentRegistry entry point
+# AgentRegistry reads every key below at ROOT level; do not nest under `agent:`.
+id: "SVC-C2-065"
+name: "svc-c2-065"
+namespace: "agent1000"
+version: "1.0.2"
+enabled: true
+category: "Cat 2"
+generation_mode: "llm"
+industry: "SVC"
+
+# Opaque compatibility metadata.
+base_type: "AgentBaseGraph"
+
+# Single dotted entry point consumed by AgentRegistry.
+class: "src.graph.graph.Graph"
+
+# Accessibility request history is available only to authenticated venue operators.
+required_trust_level: "VERIFIED_EXTERNAL"
+
+# Azure OpenAI credentials are invocation-scoped; deterministic fallback keeps
+# the graph available if a provider call is temporarily unavailable.
+requires:
+  secrets:
+    - "SVC_C2_065_REQUEST_HISTORY_API_KEY"
+    - "SVC_C2_065_VENUE_RESOURCE_API_KEY"
+    - "AZURE_OPENAI_API_KEY"
+    - "AZURE_OPENAI_ENDPOINT"
+    - "AZURE_OPENAI_DEPLOYMENT"
+  extras: ["openai"]
+
+# Runtime thresholds, connector settings, retry, memory, and HITL settings live
+# in config/config.yaml.

@@ -1,0 +1,42 @@
+# Runtime parameters loaded by AgentRegistry and passed to Graph(config=...).
+# Static identity and compile-time requirements belong in config/agent.yaml.
+
+max_retry: 3
+timeout_s: 60
+llm_provider: "azure_openai"
+llm_model: "azure-openai-deployment"
+memory_enabled: false
+
+# This deterministic internal handoff workflow does not call interrupt().
+hitl:
+  enabled: false
+
+# Configurable thresholds.
+staleness_threshold_days: 30
+
+# Expected booking channels — operators customize per venue/event.
+expected_booking_channels:
+  - "online"
+  - "phone"
+  - "in_person"
+  - "third_party"
+
+# PII fields declared in raw request-history source records.
+pii_fields:
+  - "attendee_name"
+  - "attendee_email"
+  - "attendee_phone"
+  - "disability_description"
+  - "contact_address"
+
+# Connector slots — operators configure endpoints per deployment. Credentials
+# remain secret-provider references and are never placed in runtime config.
+request_history_source:
+  type: "rest_api"
+  endpoint: ""
+  secret_key: "SVC_C2_065_REQUEST_HISTORY_API_KEY"
+
+venue_resource_source:
+  type: "rest_api"
+  endpoint: ""
+  secret_key: "SVC_C2_065_VENUE_RESOURCE_API_KEY"
